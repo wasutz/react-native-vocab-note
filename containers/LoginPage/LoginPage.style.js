@@ -5,6 +5,9 @@ export default StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10
     },
+    form: {
+        paddingBottom: 20
+    },
     title: {
         fontSize: 25,
         fontWeight: '700',

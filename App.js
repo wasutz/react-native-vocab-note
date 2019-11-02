@@ -6,6 +6,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import LoginPage from './containers/LoginPage/LoginPage';
 import MainPage from './containers/MainPage/MainPage';
+import {Root} from 'native-base';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,7 +31,9 @@ export default class App extends React.Component {
     }
 
     return (
-      <AppContainer />
+      <Root>
+        <AppContainer />
+      </Root>
     );
   }
 }
