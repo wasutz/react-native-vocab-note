@@ -1,8 +1,11 @@
 import React from 'react';
 import { AppLoading } from 'expo';
-import { Container, Text } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import LoginPage from './containers/LoginPage/LoginPage';
+import MainPage from './containers/MainPage/MainPage';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,7 +19,7 @@ export default class App extends React.Component {
     await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
+      ...Ionicons.font
     });
     this.setState({ isReady: true });
   }
@@ -27,9 +30,30 @@ export default class App extends React.Component {
     }
 
     return (
-      <Container>
-        <Text>Vocab Note</Text>
-      </Container>
+      <AppContainer />
     );
   }
 }
+
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: LoginPage
+  }
+});
+
+const AppStack = createStackNavigator({
+  Main: {
+    screen: MainPage
+  }
+});
+
+const AppNavigator = createSwitchNavigator({
+  Auth: {
+    screen: AuthStack,
+  },
+  App: {
+    screen: AppStack
+  }
+});
+
+const AppContainer = createAppContainer(AppNavigator);
