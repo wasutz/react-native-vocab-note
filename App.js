@@ -6,6 +6,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import LoginPage from './containers/LoginPage/LoginPage';
 import MainPage from './containers/MainPage/MainPage';
+import LoadingPage from './containers/LoadingPage/LoadingPage';
 import {Root} from 'native-base';
 
 export default class App extends React.Component {
@@ -51,8 +52,11 @@ const AppStack = createStackNavigator({
 });
 
 const AppNavigator = createSwitchNavigator({
+  Loading: {
+    screen: LoadingPage
+  },
   Auth: {
-    screen: AuthStack,
+    screen: AuthStack
   },
   App: {
     screen: AppStack
