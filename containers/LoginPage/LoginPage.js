@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Button, Content, Form, Item, Input, Text, Toast } from 'native-base';
-import {login} from '../../services/UserService';
-import {AsyncStorage} from 'react-native';
+import { Container, Button, Content, Form, Item, Input, Text, Toast, Spinner } from 'native-base';
 import styles from './LoginPage.style';
+import UserStore from '../../stores/UserStore';
+import {observer} from 'mobx-react';
 
 class LoginPage extends React.Component {
   static navigationOptions = {
@@ -17,23 +17,23 @@ class LoginPage extends React.Component {
     };
   }
 
-  login = async () => {
-    try {
-      const response = await login(this.state.email, this.state.password);
-      await AsyncStorage.setItem('ACCESS_TOKEN', response.data.token);
-
-      this.props.navigation.navigate('App')
-    } catch (ex) {
-      Toast.show({
-        text: 'Invalid username or password',
-        buttonText: 'Okay',
-        type: 'danger',
-        duration: 3000
+  login = () => {
+      UserStore.login(this.state.email, this.state.password).then(() => {
+        this.props.navigation.navigate('App')
+      }).catch(ex => {
+        const message = ex.response.status >= 500 ? 'Something went wrong.' : 'Invalid username or password';
+        Toast.show({
+          text: message,
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 3000
+        });
       });
-    }
   };
 
   render() {
+    const {isAuthenticating} = UserStore;
+
     return (
       <Container style={styles.container}>
         <Content>
@@ -53,13 +53,15 @@ class LoginPage extends React.Component {
                 onChangeText={value => this.setState({ password: value })} />
             </Item>
           </Form>
-          <Button block onPress={this.login}>
+          <Button block onPress={this.login} disabled={isAuthenticating}>
             <Text>Log In</Text>
           </Button>
+
+          {isAuthenticating && (<Spinner />)}
         </Content>
       </Container>
     );
   }
 }
 
-export default LoginPage;
+export default observer(LoginPage);
