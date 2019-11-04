@@ -1,13 +1,17 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import { Container, Content, List, Toast, Spinner } from 'native-base';
+import { Container, Content, List, Toast, Spinner} from 'native-base';
 import VocabStore from '../../stores/VocabStore';
 import Word from '../../components/Word/Word';
+import AddVocabIcon from '../../components/AddVocabIcon/AddVocabIcon';
 
 class MainPage extends React.Component {
-  static navigationOptions = {
-    title: 'Vocab Note'
-  };
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Vocab Note',
+      headerRight: <AddVocabIcon navigation={navigation} />
+    };
+  }
 
   componentDidMount() {
     VocabStore.getVocabs().catch(ex => {

@@ -4,10 +4,11 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Root } from 'native-base';
 import LoginPage from './containers/LoginPage/LoginPage';
 import MainPage from './containers/MainPage/MainPage';
 import LoadingPage from './containers/LoadingPage/LoadingPage';
-import {Root} from 'native-base';
+import AddVocabPage from './containers/AddVocabPage/AddVocabPage';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -48,6 +49,9 @@ const AuthStack = createStackNavigator({
 const AppStack = createStackNavigator({
   Main: {
     screen: MainPage
+  },
+  AddVocab: {
+    screen: AddVocabPage
   }
 });
 
