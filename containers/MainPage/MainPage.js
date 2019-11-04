@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, Text, Toast } from 'native-base';
-import VocabStore from '../../stores/VocabStore';
 import {observer} from 'mobx-react';
+import { Container, Content, List, Toast, Spinner } from 'native-base';
+import VocabStore from '../../stores/VocabStore';
+import Word from '../../components/Word/Word';
 
 class MainPage extends React.Component {
   static navigationOptions = {
@@ -24,13 +25,19 @@ class MainPage extends React.Component {
   }
 
   render() {
-    const {vocabs} = VocabStore;
+    const {vocabs, isFetchingVocabs} = VocabStore;
 
     return (
       <Container>
-        {vocabs.map(vocab => (
-          <Text key={vocab.id}>{vocab.word}</Text>
-        ))}
+        <Content>
+          <List>
+            {vocabs.map(vocab => (
+              <Word key={vocab.id} vocab={vocab} />
+            ))}
+          </List>
+
+          {isFetchingVocabs && (<Spinner />)}
+        </Content>
       </Container>
     );
   }
