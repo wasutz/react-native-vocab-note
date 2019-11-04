@@ -29,7 +29,7 @@ class MainPage extends React.Component {
   }
 
   render() {
-    const {vocabs, isFetchingVocabs} = VocabStore;
+    const {vocabs, isLoadingVocabs} = VocabStore;
 
     return (
       <Container>
@@ -40,7 +40,7 @@ class MainPage extends React.Component {
             ))}
           </List>
 
-          {isFetchingVocabs && (<Spinner />)}
+          {isLoadingVocabs && (<Spinner />)}
         </Content>
       </Container>
     );

@@ -8,5 +8,12 @@ export default VocabService = {
                 size
             }
         });
+    },
+
+    addNewVocab(word, meaning) {
+        return http.post('/vocabs', {
+            word,
+            meaning
+        });
     }
 }
