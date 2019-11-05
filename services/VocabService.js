@@ -15,5 +15,13 @@ export default VocabService = {
             word,
             meaning
         });
+    },
+
+    updateVocab(id, word, meaning) {
+        return http.put(`/vocabs`, {
+            id,
+            word,
+            meaning
+        });
     }
 }

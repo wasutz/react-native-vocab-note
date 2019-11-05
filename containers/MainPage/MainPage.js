@@ -36,7 +36,7 @@ class MainPage extends React.Component {
         <Content>
           <List>
             {vocabs.map(vocab => (
-              <Word key={vocab.id} vocab={vocab} />
+              <Word key={vocab.id} vocab={vocab} navigation={this.props.navigation}/>
             ))}
           </List>
 

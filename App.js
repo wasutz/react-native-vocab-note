@@ -9,6 +9,7 @@ import LoginPage from './containers/LoginPage/LoginPage';
 import MainPage from './containers/MainPage/MainPage';
 import LoadingPage from './containers/LoadingPage/LoadingPage';
 import AddVocabPage from './containers/AddVocabPage/AddVocabPage';
+import EditVocabPage from './containers/EditVocabPage/EditVocabPage';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -52,6 +53,9 @@ const AppStack = createStackNavigator({
   },
   AddVocab: {
     screen: AddVocabPage
+  },
+  EditVocab: {
+    screen: EditVocabPage
   }
 });
 

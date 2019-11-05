@@ -33,6 +33,21 @@ class VocabStore {
             this.isLoadingVocabs = false;
         }
     }
+
+    @action
+    async updateVocab(id, word, meaning) {
+        this.isLoadingVocabs = true;
+        try {
+            await VocabService.updateVocab(id, word, meaning);
+            const vocab = this.vocabs.find(vocab => vocab.id === id);
+            vocab.word = word;
+            vocab.meaning = meaning;
+        } catch (ex) {
+            throw ex;
+        } finally {
+            this.isLoadingVocabs = false;
+        }
+    }
 }
 
 const store = new VocabStore();
