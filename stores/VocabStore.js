@@ -48,6 +48,19 @@ class VocabStore {
             this.isLoadingVocabs = false;
         }
     }
+
+    @action
+    async deleteVocab(willDeleteVocab) {
+        this.isLoadingVocabs = true;
+        try {
+            await VocabService.deleteVocab(willDeleteVocab.id);
+            this.vocabs = this.vocabs.filter(vocab => vocab.id !== willDeleteVocab.id);
+        } catch (ex) {
+            throw ex;
+        } finally {
+            this.isLoadingVocabs = false;
+        }
+    }
 }
 
 const store = new VocabStore();

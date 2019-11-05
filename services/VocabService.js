@@ -18,10 +18,14 @@ export default VocabService = {
     },
 
     updateVocab(id, word, meaning) {
-        return http.put(`/vocabs`, {
+        return http.put('/vocabs', {
             id,
             word,
             meaning
         });
+    },
+
+    deleteVocab(id) {
+        return http.delete(`/vocabs/${id}`);
     }
 }

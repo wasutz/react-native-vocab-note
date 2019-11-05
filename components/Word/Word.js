@@ -1,6 +1,8 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { ListItem, Left, Body, Right, Text, Button, Icon, ActionSheet} from 'native-base';
 import VocabConfig from '../../configs/VocabConfig';
+import VocabStore from '../../stores/VocabStore';
 
 const Word = ({vocab, navigation}) => {
     return (
@@ -22,7 +24,21 @@ const Word = ({vocab, navigation}) => {
                         if (VocabConfig.OPTIONS[buttonIndex] === 'Edit') {
                             navigation.navigate('EditVocab', {vocab});
                         } else if (VocabConfig.OPTIONS[buttonIndex] === 'Delete') {
-                            console.log("Show delete modal: " + vocab.id);
+                            Alert.alert(
+                                'Delete vocab?',
+                                `Are you sure you want to delete this vocab: ${vocab.word}?`,
+                                [
+                                  {
+                                    text: 'Cancel',
+                                    style: 'cancel',
+                                  },
+                                  {
+                                    text: 'Delete',
+                                    onPress: () => VocabStore.deleteVocab(vocab)
+                                  },
+                                ],
+                                {cancelable: false},
+                            );
                         }
                     }
                 )}>
