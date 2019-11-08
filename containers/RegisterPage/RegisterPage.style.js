@@ -7,14 +7,5 @@ export default StyleSheet.create({
     },
     form: {
         paddingBottom: 20
-    },
-    title: {
-        fontSize: 25,
-        fontWeight: '700',
-        textAlign: 'center',
-        margin: 40
-    },
-    registerButton: {
-        marginTop: 10
     }
 });

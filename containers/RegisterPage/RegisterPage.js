@@ -1,39 +1,36 @@
 import React from 'react';
 import { Container, Button, Content, Form, Item, Input, Text, Toast, Spinner } from 'native-base';
-import styles from './LoginPage.style';
+import styles from './RegisterPage.style';
 import AuthStore from '../../stores/AuthStore';
 import {observer} from 'mobx-react';
 
-class LoginPage extends React.Component {
+class RegisterPage extends React.Component {
   static navigationOptions = {
-    title: 'Login'
+    title: 'Register'
   };
 
   constructor(props) {
     super(props);
     this.state = {
       email: '',
+      username: '',
       password: ''
     };
   }
 
-  login = () => {
-    AuthStore.login(this.state.email, this.state.password).then(() => {
-      this.props.navigation.navigate('App')
-    }).catch(ex => {
-      console.log(JSON.stringify(ex));
-      const message = ex.response.status >= 500 ? 'Something went wrong.' : 'Invalid username or password';
-      Toast.show({
-        text: message,
-        buttonText: 'Okay',
-        type: 'danger',
-        duration: 3000
-      });
+  register = () => {
+    const {email, username, password} = this.state;
+    console.log(email + " D " + username);
+    AuthStore.register(email, username, password).then(() => {
+      this.props.navigation.goBack();
+    }).catch(() => {
+        Toast.show({
+          text: 'Something went wrong',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 3000
+        });
     });
-  };
-
-  openRegisterPage = () => {
-    this.props.navigation.navigate('Register');
   }
 
   render() {
@@ -42,13 +39,18 @@ class LoginPage extends React.Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <Text style={styles.title}>Vocab Note</Text>
           <Form style={styles.form}>
             <Item>
               <Input
                 placeholder='Email'
                 value={this.state.email}
                 onChangeText={value => this.setState({ email: value })}/>
+            </Item>
+            <Item>
+              <Input
+                placeholder='Username'
+                value={this.state.username}
+                onChangeText={value => this.setState({ username: value })}/>
             </Item>
             <Item last>
               <Input 
@@ -58,10 +60,7 @@ class LoginPage extends React.Component {
                 onChangeText={value => this.setState({ password: value })} />
             </Item>
           </Form>
-          <Button block onPress={this.login} disabled={isAuthenticating}>
-            <Text>Log In</Text>
-          </Button>
-          <Button full transparent onPress={this.openRegisterPage} style={styles.registerButton}>
+          <Button block onPress={this.register} disabled={isAuthenticating}>
             <Text>Register</Text>
           </Button>
 
@@ -72,4 +71,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default observer(LoginPage);
+export default observer(RegisterPage);

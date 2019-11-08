@@ -10,6 +10,7 @@ import MainPage from './containers/MainPage/MainPage';
 import LoadingPage from './containers/LoadingPage/LoadingPage';
 import AddVocabPage from './containers/AddVocabPage/AddVocabPage';
 import EditVocabPage from './containers/EditVocabPage/EditVocabPage';
+import RegisterPage from './containers/RegisterPage/RegisterPage';
 import ProfilePage from './containers/ProfilePage/ProfilePage';
 
 export default class App extends React.Component {
@@ -45,6 +46,9 @@ export default class App extends React.Component {
 const AuthStack = createStackNavigator({
   Login: {
     screen: LoginPage
+  },
+  Register: {
+    screen: RegisterPage
   }
 });
 
