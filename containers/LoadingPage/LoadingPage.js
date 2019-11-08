@@ -1,10 +1,10 @@
 import React from 'react';
 import { ActivityIndicator, StatusBar, View } from 'react-native';
-import UserStore from '../../stores/UserStore';
+import AuthStore from '../../stores/AuthStore';
 
 class LoadingPage extends React.Component {
   componentDidMount() {
-    this.props.navigation.navigate(UserStore.isAuthenticated ? 'App' : 'Auth');
+    this.props.navigation.navigate(AuthStore.isAuthenticated ? 'App' : 'Auth');
   }
 
   render() {

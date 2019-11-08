@@ -1,15 +1,18 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import { Container, Content, List, Toast, Spinner} from 'native-base';
+import { Container, Content, List, Toast, Spinner, View} from 'native-base';
 import VocabStore from '../../stores/VocabStore';
 import Word from '../../components/Word/Word';
-import AddVocabIcon from '../../components/AddVocabIcon/AddVocabIcon';
+import HeaderIcon from '../../components/HeaderIcon/HeaderIcon';
 
 class MainPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Vocab Note',
-      headerRight: <AddVocabIcon navigation={navigation} />
+      headerRight: <View style={{flexDirection: 'row'}}>
+        <HeaderIcon onPress={() => navigation.navigate('AddVocab')} type="Entypo" name="new-message" />
+        <HeaderIcon onPress={() => navigation.navigate('Profile')} type="MaterialIcons" name="person" />
+      </View>
     };
   }
 

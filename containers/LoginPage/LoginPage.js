@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Button, Content, Form, Item, Input, Text, Toast, Spinner } from 'native-base';
 import styles from './LoginPage.style';
-import UserStore from '../../stores/UserStore';
+import AuthStore from '../../stores/AuthStore';
 import {observer} from 'mobx-react';
 
 class LoginPage extends React.Component {
@@ -18,21 +18,22 @@ class LoginPage extends React.Component {
   }
 
   login = () => {
-      UserStore.login(this.state.email, this.state.password).then(() => {
-        this.props.navigation.navigate('App')
-      }).catch(ex => {
-        const message = ex.response.status >= 500 ? 'Something went wrong.' : 'Invalid username or password';
-        Toast.show({
-          text: message,
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 3000
-        });
+    AuthStore.login(this.state.email, this.state.password).then(() => {
+      this.props.navigation.navigate('App')
+    }).catch(ex => {
+      console.log(JSON.stringify(ex));
+      const message = ex.response.status >= 500 ? 'Something went wrong.' : 'Invalid username or password';
+      Toast.show({
+        text: message,
+        buttonText: 'Okay',
+        type: 'danger',
+        duration: 3000
       });
+    });
   };
 
   render() {
-    const {isAuthenticating} = UserStore;
+    const {isAuthenticating} = AuthStore;
 
     return (
       <Container style={styles.container}>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AppConfig from '../configs/AppConfig';
-import UserStore from '../stores/UserStore';
+import AuthStore from '../stores/AuthStore';
 
 const http = axios.create({
   baseURL: AppConfig.BASE_URL,
@@ -9,8 +9,8 @@ const http = axios.create({
 
 http.interceptors.request.use(
   config => {
-    if (UserStore.accessToken) {
-        config.headers.Authorization = `Bearer ${UserStore.accessToken}`;
+    if (AuthStore.accessToken) {
+        config.headers.Authorization = `Bearer ${AuthStore.accessToken}`;
     }
 
     return config;

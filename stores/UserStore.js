@@ -1,43 +1,21 @@
 import { observable, action, computed } from 'mobx'
-import { AsyncStorage } from 'react-native';
 import UserService from '../services/UserService';
-import AppConfig from '../configs/AppConfig';
 
 class UserStore {
-    constructor() {
-        this.isAuthenticating = true
-        AsyncStorage.getItem(AppConfig.ACCESS_TOKEN_KEY).then(data => {
-          this.accessToken = data
-          this.isAuthenticating = false
-        });
-    }
-
-    @observable isAuthenticating = false;
-    @observable accessToken = null;
-
-    @computed get isAuthenticated() {
-        return this.accessToken;
-    }
+    @observable isGettingUser = false;
+    @observable user = null;
 
     @action
-    async login(email, password) {
-        this.isAuthenticating = true;
+    async getUser() {
+        this.isGettingUser = true;
         try {
-            const response = await UserService.login(email, password);
-            const accessToken = response.data.token;
-            await AsyncStorage.setItem(AppConfig.ACCESS_TOKEN_KEY, accessToken);
-
-            this.accessToken = accessToken.
-            this.isAuthenticating = false;
+            const response = await UserService.getUser();
+            this.user = response.data.user;
+            this.isGettingUser = false;
         } catch (ex) {
-            this.isAuthenticating = false;
+            this.isGettingUser = false;
             throw ex;
         }
-    }
-
-    @action
-    logout() {
-        return AsyncStorage.removeItem(AppConfig.ACCESS_TOKEN_KEY);
     }
 }
 

@@ -1,16 +1,7 @@
-import axios from 'axios';
-import AppConfig from '../configs/AppConfig';
+import http from '../utils/http';
 
 export default UserService = {
-    login(email, password) {
-        return axios({
-            baseURL: AppConfig.BASE_URL,
-            method: 'post',
-            url: `/login`,
-            data: {
-                email,
-                password
-            }
-        });
+    getUser() {
+        return http.get('/user');
     }
 }
