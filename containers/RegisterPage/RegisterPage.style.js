@@ -7,5 +7,14 @@ export default StyleSheet.create({
     },
     form: {
         paddingBottom: 20
+    },
+    errorMessageItem: {
+        margin: 20
+    },
+    errorMessageText: {
+        color: '#d50000'
+    },
+    hidden: {
+        display: 'none'
     }
 });

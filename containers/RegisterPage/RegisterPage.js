@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Button, Content, Form, Item, Input, Text, Toast, Spinner } from 'native-base';
+import { Container, Button, Content, Form, Item, Input, Text, Toast, Spinner, View } from 'native-base';
 import styles from './RegisterPage.style';
 import AuthStore from '../../stores/AuthStore';
 import {observer} from 'mobx-react';
@@ -20,45 +20,62 @@ class RegisterPage extends React.Component {
 
   register = () => {
     const {email, username, password} = this.state;
-    console.log(email + " D " + username);
     AuthStore.register(email, username, password).then(() => {
       this.props.navigation.goBack();
-    }).catch(() => {
+    }).catch(ex => {
+      if (ex.response.status >= 500) {
         Toast.show({
           text: 'Something went wrong',
           buttonText: 'Okay',
           type: 'danger',
           duration: 3000
         });
+      }
     });
   }
 
+  onChangeInput = (key, value) => {
+    this.setState({ [key]: value });
+    AuthStore.removeErrorDescriptionItem(key);
+  };
+
   render() {
-    const {isAuthenticating} = AuthStore;
+    const {isAuthenticating, errorDescription} = AuthStore;
 
     return (
       <Container style={styles.container}>
         <Content>
           <Form style={styles.form}>
-            <Item>
+            <Item error={Boolean(errorDescription.email)}>
               <Input
                 placeholder='Email'
                 value={this.state.email}
-                onChangeText={value => this.setState({ email: value })}/>
+                onChangeText={value => this.onChangeInput('email', value)}/>
             </Item>
-            <Item>
+            <View style={errorDescription.email ? styles.errorMessageItem : styles.hidden}>
+              <Text style={styles.errorMessageText}>{errorDescription.email}</Text>
+            </View>
+
+            <Item error={Boolean(errorDescription.username)}>
               <Input
                 placeholder='Username'
                 value={this.state.username}
-                onChangeText={value => this.setState({ username: value })}/>
+                onChangeText={value =>  this.onChangeInput('username', value)}/>
             </Item>
-            <Item last>
-              <Input 
+            <View style={errorDescription.username ? styles.errorMessageItem : styles.hidden}>
+              <Text style={styles.errorMessageText}>{errorDescription.username}</Text>
+            </View>
+
+            <Item error={Boolean(errorDescription.password)} last>
+              <Input
                 placeholder='Password'
                 secureTextEntry={true}
                 value={this.state.password}
-                onChangeText={value => this.setState({ password: value })} />
+                onChangeText={value => this.onChangeInput('password', value)} />
             </Item>
+            <View style={errorDescription.password ? styles.errorMessageItem : styles.hidden}>
+              <Text style={styles.errorMessageText}>{errorDescription.password}</Text>
+            </View>
           </Form>
           <Button block onPress={this.register} disabled={isAuthenticating}>
             <Text>Register</Text>
