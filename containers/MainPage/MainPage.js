@@ -1,9 +1,10 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import { Container, Content, List, Toast, Spinner, View} from 'native-base';
+import { Container, Content, List, Toast, Spinner, View, H3} from 'native-base';
 import VocabStore from '../../stores/VocabStore';
 import Word from '../../components/Word/Word';
 import HeaderIcon from '../../components/HeaderIcon/HeaderIcon';
+import styles from './MainPage.style';
 
 class MainPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -33,6 +34,14 @@ class MainPage extends React.Component {
 
   render() {
     const {vocabs, isLoadingVocabs} = VocabStore;
+
+    if (!vocabs.length && !isLoadingVocabs) {
+      return (
+        <View style={styles.emptyMessage}>
+          <H3>No vocabs</H3>
+        </View>
+      );
+    }
 
     return (
       <Container>
