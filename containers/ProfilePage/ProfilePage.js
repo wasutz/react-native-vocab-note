@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Container, Button, Content, Form, Item, Input, Text, Spinner, Footer, FooterTab } from 'native-base';
+import { Container, Button, Content, Form, Item, Input, Text, Label, Spinner, Footer, FooterTab } from 'native-base';
 import styles from './ProfilePage.style';
 import UserStore from '../../stores/UserStore';
 import AuthStore from '../../stores/AuthStore';
@@ -32,13 +32,15 @@ class ProfilePage extends React.Component {
       <Container>
         <Content style={styles.content}>
           <Form style={styles.form}>
-            <Item>
+            <Item stackedLabel>
+              <Label>Email</Label>
               <Input
                 placeholder='Email'
                 value={_.get(user, 'email', '')}
                 disabled/>
             </Item>
-            <Item>
+            <Item stackedLabel>
+              <Label>Username</Label>
               <Input
                 placeholder='Username'
                 value={_.get(user, 'username', '')}
