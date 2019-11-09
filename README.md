@@ -4,5 +4,4 @@
 - MobX state management
 
 # API
-This application is using API from this repository below.
-https://github.com/wasutz/Vocabnote-Restful-API-Example
+This application is using API from this repository: https://github.com/wasutz/Vocabnote-Restful-API-Example
